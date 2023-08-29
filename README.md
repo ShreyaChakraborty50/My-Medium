@@ -28,9 +28,9 @@
 - [x] **Authentication required**
 - [ ] **Authentication not required**
 
-## *User related*
+## *Author related*
 ### Request
-- [ ] [Resgister](docs/authors/register.md): `POST localhost:3000/authors/register`
+- [ ] [Register](docs/authors/register.md): `POST localhost:3000/authors/register`
 
 ### Response
 
@@ -55,9 +55,17 @@
       
  ### Response
 
-    {"blog_id":1,"title":"Global Economy","description":"very dangerous",, "created_at":"2023-08-29T11:37:12", "updated_at":"2023-08-29T12:17:18" "status":"ok"}
+    {"blog_id":[1,2,3,4], "author_id":[1,2,3,4],"title":["Global Economy","Sports","Drama Seminar","Fashion"],"description":["very dangerous","Football","Two and a Half Men","Latest Trends"]}
 
+&nbsp;
 
+### Request
+- [ ] [Get details of all blogs](docs/blogs/getDetailsOfAllBlogs.md): `GET localhost:3000/blogs`
+
+### Response
+
+    {"blog_id":1,"title":"Global Economy","description":"very dangerous"}
+    
 &nbsp;
 
 ### Request
@@ -65,7 +73,7 @@
 
 ### Response
 
-    {"blog_id":1,"title":"Global Economy","description":"very dangerous"}
+    {"blog_id":1, "author_id":1,"title":"Global Economy","description":"very dangerous"}
     
 
 
