@@ -1,15 +1,20 @@
-import { Router } from 'express';
-import * as blogController from '../controllers/blogController.js';
-//import* as authorController from '../controllers/authorController.js';
+const blogController = require('../controllers/blogController.js')
+const router = require('express').Router()
+const verifyToken = require('../middleware/jwtToken.js')
+const { pagination } = require('../utils/pagination.js')
 
 
+router.post('/',verifyToken.verifyToken,blogController.addBlog)
+
+router.get('/', blogController.getAllBlogs)
+
+router.get('/:blogId',  blogController.getBlogById)
+
+router.get('/authors/:authorId', blogController.getBlogsByAuthor)
+
+router.put('/:blogId', verifyToken.verifyToken, verifyToken.authorize,  blogController.updateBlogById)
+
+router.delete('/:blogId', verifyToken.verifyToken, verifyToken.authorize, blogController.deleteBlogById)
 
 
-const router = Router();
-
-
-router.post('/blogs', blogController.createBlog);
-router.get('/blogs', blogController.getAllBlogs);
-router.get('/:id', blogController.getOneBlog);
-
-export default router;
+module.exports= router;
