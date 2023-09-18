@@ -1,40 +1,15 @@
-import express from 'express'
-import cors from 'cors'
-import defaultConfig from './config/dbConfig.js'
-import router from './routes/blogRouter.js'
-
-
+const express = require('express')
 const app = express()
+const router = require('./routes/index.js');
+const { globalErrorHandler } = require('./errorhandler/errorHandler.js');
+require('dotenv').config();
 
-var corsOptions = {
-    origin: 'https://localhost:8081'
-}
-
-
-//middleware
-
-app.use(cors(corsOptions))
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
+app.use('/api', router)
+app.use(globalErrorHandler)
 
-
-//routers
-
-app.use('/api',router)
-
-
-//testing api
-
-app.get('/', (req,res) =>{
-    res.json({message: 'API is alive'})
-})
-
-
-//port
-
-const PORT = defaultConfig.generalConfig.PORT || 8080
-
-//server
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`)
