@@ -1,7 +1,7 @@
 const db = require('../models')
 const Author = db.authors
 
-const { customError } = require('../errorhandler/customError');
+const { customError } = require('../errorHandler/customError');
 const validator = require('../utils/validator');
 
 

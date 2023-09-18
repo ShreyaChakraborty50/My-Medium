@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) =>{
+module.exports = (sequelize, DataTypes) =>{
 
     const Blog = sequelize.define("blog",{
         
@@ -18,12 +18,13 @@ export default (sequelize, DataTypes) =>{
         },
 
         authorId : {
-            type : DataTypes.INTEGER,
+            type : DataTypes.UUID,
             allowNull : false
         }
 
 
     })
+    
     
     return Blog
 

@@ -1,48 +1,58 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import defaultConfig from '../config/dbConfig.js';
-import createBlogModel from './blogModel.js';
-import createAuthorModel from './authorModel.js';
+const dbConfig = require('../config/dbConfig.js');
+
+const {Sequelize, DataTypes} = require('sequelize');
 
 const sequelize = new Sequelize(
-  defaultConfig.dbConfig.DB,
-  defaultConfig.dbConfig.USER,
-  defaultConfig.dbConfig.PASSWORD, {
-  host: defaultConfig.dbConfig.HOST,
-  dialect: defaultConfig.dbConfig.dialect,
-  operatorsAliases: false,
+    dbConfig.DB,
+    dbConfig.USER,
+    dbConfig.PASSWORD, {
+        host: dbConfig.HOST,
+        dialect: dbConfig.dialect,
+        operatorsAliases: false,
 
-  pool: {
-    max: defaultConfig.dbConfig.pool.max,
-    min: defaultConfig.dbConfig.pool.min,
-    acquire: defaultConfig.dbConfig.pool.acquire,
-    idle: defaultConfig.dbConfig.pool.idle
-  }
-}
-);
+        pool: {
+            max: dbConfig.pool.max,
+            min: dbConfig.pool.min,
+            acquire: dbConfig.pool.acquire,
+            idle: dbConfig.pool.idle
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connected..');
-  } catch (err) {
-    console.log('Error: ' + err);
-  }
-})();
+        }
+    }
+)
 
-const db = {
-  Sequelize,
-  sequelize
-};
+sequelize.authenticate()
+.then(() => {
+    console.log('connected..')
+})
+.catch(err => {
+    console.log('Error'+ err)
+})
+
+const db = {}
+
+db.Sequelize = Sequelize
+db.sequelize = sequelize
+
+db.authors = require('./authorModel.js')(sequelize, DataTypes)
+db.blogs = require('./blogModel.js')(sequelize, DataTypes)
+
+db.authors.hasMany(db.blogs, {
+    foreignKey: { name: 'authorId', allowNull: false },
+});
+db.blogs.belongsTo(db.authors,{
+        foreignKey: { name: 'authorId', allowNull: false },
+    });
 
 
 
-const [blogs, authors] = [createBlogModel, createAuthorModel].map(fn => fn(sequelize, DataTypes));
-db.blogs = blogs;
-db.authors = authors;
+db.sequelize.sync({ force: false })
+.then(() => {
+    console.log('yes re-sync done!')
+})
 
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('Re-sync done!');
-  });
 
-export default db;
+
+
+
+
+module.exports = db
