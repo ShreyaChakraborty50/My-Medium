@@ -1,6 +1,6 @@
 const db = require('../models')
 const jwt = require("jsonwebtoken")
-const authorService = require('../services/authorService.js')
+const authorService = require('../services/authorServices.js')
 const {authorDTO} = require('../utils/authorDTO.js')
 const {sendResponse} = require('../utils/response.js')
 const Author = db.authors

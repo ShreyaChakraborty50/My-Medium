@@ -1,7 +1,7 @@
 // blogController.js
 
 const {sendResponse} = require('../utils/response.js')
-const blogService = require('../services/blogService.js')
+const blogService = require('../services/blogServices.js')
 
 // Create a blog
 const addBlog = async (req, res) => {

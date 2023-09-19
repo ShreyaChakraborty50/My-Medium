@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const {sendResponse} = require('../utils/response.js')
 const Author = db.authors
 const bcrypt = require('bcrypt');
-const { isEmailAlreadyUsedMiddleware } = require('../middleware/validationMiddleware');
+//const { isEmailAlreadyUsedMiddleware } = require('../middleware/validation');
 //const validator = require('../utils/validator');
 //create author
 

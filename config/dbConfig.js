@@ -1,9 +1,10 @@
-const dbConfig = {
+module.exports = {
     HOST: 'localhost',
     USER: 'root',
     PASSWORD: '',
-    DB: 'node-sequelize_api_db',
+    DB: 'my-medium',
     dialect: 'mysql',
+
     pool: {
         max: 5,
         min: 0,
@@ -11,9 +12,3 @@ const dbConfig = {
         idle: 10000
     }
 }
-
-const generalConfig = {
-    PORT: 5050
-}
-
-export default { dbConfig, generalConfig }

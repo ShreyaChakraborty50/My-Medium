@@ -1,4 +1,4 @@
-const blogService = require('../services/blogService.js')
+const blogService = require('../services/blogServices.js')
 const jwt = require("jsonwebtoken")
 
 const verifyToken = (req,res,next)=>{
