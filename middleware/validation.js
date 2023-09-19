@@ -24,17 +24,15 @@ const missingLogInFieldMiddleware =  (req,res,next) =>{
     next()
 }
 
-const isEmailAlreadyUsedMiddleware = async(req, res, next) =>{
+const isEmailAlreadyUsedMiddleware = async (req, res, next) =>{
    
     try{
         const used = await Author.findOne({ where:  { email : req.body.email } });
-        console.log(used)
-        if (!used){
-            console.log("Hello")
-            next();
+        if (used) {
+            next(customError(400, 'Email already in use'))
         }
-        console.log("Hello")
-        next(customError(400, 'Email already in use'))
+        next()
+       
     }
     catch(error){
         next(customError(500, 'Internal Server Error'))
