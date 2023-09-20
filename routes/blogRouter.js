@@ -1,19 +1,27 @@
-const blogController = require('../controllers/blogController.js')
-const router = require('express').Router()
-const verifyToken = require('../middleware/jwtToken.js')
+const blogController = require("../controllers/blogController.js");
+const router = require("express").Router();
+const verifyToken = require("../middleware/jwtToken.js");
 
+router.post("/", verifyToken.verifyToken, blogController.addBlog);
 
-router.post('/',verifyToken.verifyToken,blogController.addBlog)
+router.get("/", blogController.getAllBlogs);
 
-router.get('/', blogController.getAllBlogs)
+router.get("/:blogId", blogController.getBlogById);
 
-router.get('/:blogId',  blogController.getBlogById)
+router.get("/authors/:authorId", blogController.getBlogsByAuthor);
 
-router.get('/authors/:authorId', blogController.getBlogsByAuthor)
+router.put(
+  "/:blogId",
+  verifyToken.verifyToken,
+  verifyToken.authorize,
+  blogController.updateBlogById,
+);
 
-router.put('/:blogId', verifyToken.verifyToken, verifyToken.authorize,  blogController.updateBlogById)
+router.delete(
+  "/:blogId",
+  verifyToken.verifyToken,
+  verifyToken.authorize,
+  blogController.deleteBlogById,
+);
 
-router.delete('/:blogId', verifyToken.verifyToken, verifyToken.authorize, blogController.deleteBlogById)
-
-
-module.exports= router;
+module.exports = router;
