@@ -3,7 +3,6 @@ const Author = db.authors
 const Blog = db.blogs
 
 
-// Create a new blog
 const addBlog = async (info) => {
     
     const blog = await Blog.create(info);       
@@ -11,7 +10,7 @@ const addBlog = async (info) => {
     
 };
 
-// Get a blog by ID
+
 const getBlogById = async (blogId) => {
     
     const blog = await Blog.findOne({ where: { blogId: blogId}});
@@ -19,11 +18,10 @@ const getBlogById = async (blogId) => {
     return blog;
     
 };
-// Get all blogs
+
+
 const getAllBlogs = async (req,res) => {
     
-    // const blogs = await Blog.findAll();
-    // return blogs;
     const pageAsNumber = Number.parseInt(req.query.page);
     const sizeAsNumber = Number.parseInt(req.query.size);
     
@@ -41,15 +39,11 @@ const getAllBlogs = async (req,res) => {
         limit: size,
         offset: page * size
     });
-    // res.send({
-    //     content: blogs.rows,
-    //     totalPages: Math.ceil(blogs.count / Number.parseInt(size))
-    // });
-    // next();
+    
     return blogs
     
 };
-// Function to get all blogs by a specific author
+
 async function getBlogsByAuthor(authorId) {
     
     const author = await Author.findOne({ where: { authorId: authorId}});

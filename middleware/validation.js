@@ -6,57 +6,68 @@ const validator = require('../utils/validator');
 
 
 const missingSignUpFieldMiddleware =  (req,res,next) =>{
-   
-    if (!req.body.name || !req.body.email || !req.body.password) {
+    try{
+        if (!req.body.name || !req.body.email || !req.body.password) {
+            
+            throw(customError(400,"Email or password missing."))
+            
+        }
         
-        next(customError(400,"Email or password missing."))
-        
+        next()
     }
-   
-    next()
+    catch(error){
+        next(customError(500, 'Error while signing up !'))
+    } 
+    
 }
 const missingLogInFieldMiddleware =  (req,res,next) =>{
-    if ( !req.body.email || !req.body.password) {
+    try{
+        if ( !req.body.email || !req.body.password) {
         
-        next(customError(400,"Email or password missing."))
+            throw(customError(400,"Email or password missing."))
+        }
+        
+        next()
+
     }
+    catch(error){
+        next(customError(500, 'Error while signing up !'))
+    }
+
     
-    next()
 }
 
 const isEmailAlreadyUsedMiddleware = async (req, res, next) =>{
-   
+    
     try{
         const used = await Author.findOne({ where:  { email : req.body.email } });
         if (used) {
-            next(customError(400, 'Email already in use'))
+            throw(customError(400, 'Email already in use'))
         }
         next()
-       
+        
     }
     catch(error){
         next(customError(500, 'Internal Server Error'))
     }     
-   
+    
 }
 
 const validationMiddleware = (req, res, next) => {
     try {
         if (!validator.isEmailValid(req.body.email)) {
-           
-            next(customError(400,"Email is invalid"))
+            
+            throw(customError(400,"Email is invalid"))
         }
-
+        
         if (!validator.isPasswordValid(req.body.password)) {
             
-            next(customError(400, 'Password must be 8 characters long!'))
+            throw(customError(400, 'Password must be 8 characters long!'))
         }
-
+        
         next();
     } catch(error) {
-        // error.message = "Something wrong with user provided input!"
-        // error.statusCode = 500
-        // next(error)
+        
         next(customError(500, 'Something wrong with user provided input!'))
     }
 }

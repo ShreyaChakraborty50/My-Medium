@@ -1,7 +1,6 @@
 const blogController = require('../controllers/blogController.js')
 const router = require('express').Router()
 const verifyToken = require('../middleware/jwtToken.js')
-const { pagination } = require('../utils/pagination.js')
 
 
 router.post('/',verifyToken.verifyToken,blogController.addBlog)

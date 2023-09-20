@@ -1,7 +1,7 @@
 const db = require('../models')
 const Author = db.authors
 
-//view one author
+
 const getAuthorById = async (authorId) => {
    
     const blog = await Author.findOne({ where: { authorId: authorId}});
@@ -17,10 +17,6 @@ const getAllAuthors = async () => {
 
 };
 
-
-
-
-//view all authors
 
 module.exports = {
     getAuthorById,

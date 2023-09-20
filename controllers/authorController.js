@@ -1,12 +1,7 @@
 const db = require('../models')
-const jwt = require("jsonwebtoken")
 const authorService = require('../services/authorServices.js')
 const {authorDTO} = require('../utils/authorDTO.js')
 const {sendResponse} = require('../utils/response.js')
-const Author = db.authors
-
-
-// 2. view one Author
 
 const getAuthorById = async (req, res) => {
   try {
@@ -15,23 +10,22 @@ const getAuthorById = async (req, res) => {
     
     sendResponse(res,authorDTO(author),200)
   }
- catch{
-  res.status(500).json({ message: 'Internal Server Error' });
- }
+  catch(error){   
+    next(customError(500,"Error while fetching author by ID."))
+  }
   
 }
 
-//view all author
+
 const getAllAuthors = async (req, res) => {
   try {
     const authors = await authorService.getAllAuthors();
     const authorsDTOArray = authors.map(author => authorDTO(author));
-   
+    
     sendResponse(res,authorsDTOArray,200)
-    console.log(authors);
-  } catch (error) {
-    console.error('Error fetching authors:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+
+  } catch (error) { 
+    next(customError(500,"Error fetching authors."))
   }
 };
 
