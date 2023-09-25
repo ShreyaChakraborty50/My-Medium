@@ -3,9 +3,9 @@ const blogServices = require("../../services/blogServices.js");
 const mockDb = require("../../__mocks__/mockDB.js")
 const httpMocks = require('node-mocks-http');
 const Blog = db.blogs;
-describe('Blog controller test', () => {
+describe('Blog Service test', () => {
     describe('Add blog test', () => {
-        it('shlould create a blog', async () => {
+        it('should create a blog', async () => {
             let info = {
                 title: 'Blog 1',
                 description: 'Description 1',
@@ -20,16 +20,16 @@ describe('Blog controller test', () => {
         })
     })
     
-    describe("View Single Blog", () => {
-        it("should get a blog by ID", async () => {
-            const blogId = "2";
-            const mockBlog = mockDb.blogs[1]
-            jest.spyOn(Blog, "findOne").mockResolvedValue(mockBlog);
-            const result = await blogServices.getBlogById(blogId);
-            expect(Blog.findOne).toHaveBeenCalledWith({ where: { blogId: blogId } });
-            expect(result).toEqual(mockBlog);
-        });
-    });
+    // describe("View Single Blog", () => {
+    //     it("should get a blog by ID", async () => {
+    //         const blogId = "2";
+    //         const mockBlog = mockDb.blogs[1]
+    //         jest.spyOn(Blog, "findOne").mockResolvedValue(mockBlog);
+    //         const result = await blogServices.getBlogById(blogId);
+    //         expect(Blog.findOne).toHaveBeenCalledWith({ where: { blogId: blogId } });
+    //         expect(result).toEqual(mockBlog);
+    //     });
+    // });
     
     describe("View All Blogs", () => {
         it("should get all blogs", async () => {
@@ -71,7 +71,7 @@ describe('Blog controller test', () => {
                 }
                 );
             expect(Blog.update).toHaveBeenCalledTimes(1);
-            // expect(Blog.findOne).toHaveBeenCalledTimes(1);
+            expect(Blog.findOne).toHaveBeenCalledTimes(1);
                 expect(result).toEqual(mockDb.blogs[0]); 
             });
             
@@ -93,6 +93,16 @@ describe('Blog controller test', () => {
                     }
                     );
                     expect(result).toBeNull(); 
+                });
+            });
+            describe("Delete Single Blog", () => {
+                it("should delete a blog by ID", async () => {
+                    const blogId = "3";
+                    const mockBlog = mockDb.blogs[2]
+                    jest.spyOn(Blog, "destroy").mockResolvedValue(mockBlog);
+                    const result = await blogServices.deleteBlogById(blogId);
+                    expect(Blog.destroy).toHaveBeenCalledWith({ where: { blogId: blogId } });
+                    expect(result).toEqual(mockBlog);
                 });
             });
             

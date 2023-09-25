@@ -27,6 +27,12 @@ const mockDb = {
         description: 'Description 2',
         authorId: '2',
       },
+      {
+        blogId: '3',
+        title: 'Blog 3',
+        description: 'Description 3',
+        authorId: '3',
+      },
       
     ],
   };

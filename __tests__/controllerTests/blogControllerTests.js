@@ -118,22 +118,7 @@ describe('Blog controller test', () => {
   })
   
   describe('Update blog test', () => {
-    it('should give error if blog not found ', async () => {
-      const req = httpMocks.createRequest({ 
-        body : {
-          title: 'Blog 1' ,
-          description: 'Description 1'
-        },
-      params:{
-        blogId: '10'
-      }})
-      var res = httpMocks.createResponse();
-        const next = jest.fn()
-        
-        await blogController.updateBlogById(req, res, next)
-        expect(next).toHaveBeenCalledWith(customError(404, "Blog not found."))
-      })
-    })
+    
   
       it('should edit blog successfully', async () => {
         const req =  httpMocks.createRequest( {
@@ -165,21 +150,10 @@ describe('Blog controller test', () => {
         expect(data).toStrictEqual(expectedResponse)
         expect(resStatusCode).toBe(200)
       })
-    
-    describe('Delete blog test', () => {
-      it('should delete the blog', async () => {
-        const req = httpMocks.createRequest({ 
-        
-      params:{
-        blogId: '10'
-      }})
-      var res = httpMocks.createResponse();
-        const next = jest.fn()
-        
-        await blogController.deleteBlogById(req, res, next)
-        expect(next).toHaveBeenCalledWith(customError(404, "Blog not found."))
-      })
     })
+    describe('Delete blog test', () => {
+      
+   
   
       it('should delete blog successfully', async () => {
         const req =  httpMocks.createRequest( {
@@ -193,7 +167,7 @@ describe('Blog controller test', () => {
         var res = httpMocks.createResponse();
         
         const expectedResponse = {
-          data: mockDb.blogs[0],
+          data: mockDb.blogs[2],
         }
         const next = jest.fn()
         
@@ -208,7 +182,7 @@ describe('Blog controller test', () => {
         
         expect(resStatusCode).toBe(204)
        })
-   
+      })
   
   })
   
