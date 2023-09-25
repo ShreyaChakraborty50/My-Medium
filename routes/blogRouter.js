@@ -1,8 +1,10 @@
 const blogController = require("../controllers/blogController.js");
 const router = require("express").Router();
 const verifyToken = require("../middleware/jwtToken.js");
+const { missingBlogFieldMiddleware } = require("../middleware/validation.js");
 
-router.post("/", verifyToken.verifyToken, blogController.addBlog);
+
+router.post("/", verifyToken.verifyToken, missingBlogFieldMiddleware , blogController.addBlog);
 
 router.get("/", blogController.getAllBlogs);
 
@@ -14,6 +16,7 @@ router.put(
   "/:blogId",
   verifyToken.verifyToken,
   verifyToken.authorize,
+  missingBlogFieldMiddleware,
   blogController.updateBlogById,
 );
 

@@ -55,9 +55,23 @@ const validationMiddleware = (req, res, next) => {
   }
 };
 
+
+const missingBlogFieldMiddleware = (req, res, next) => {
+  try {
+    if (!req.body.title || !req.body.description ) {
+      throw customError(400, "One of the required fields is missing");
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   missingSignUpFieldMiddleware,
   missingLogInFieldMiddleware,
   isEmailAlreadyUsedMiddleware,
   validationMiddleware,
+  missingBlogFieldMiddleware
 };

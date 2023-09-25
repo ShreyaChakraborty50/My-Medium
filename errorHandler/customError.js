@@ -6,5 +6,5 @@ const customError = (statusCode, message) => {
 };
 
 module.exports = {
-  customError,
+  customError
 };
